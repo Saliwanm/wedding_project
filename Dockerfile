@@ -1,8 +1,8 @@
 FROM python:3.8
 ENV PYTHONUNBUFFERED 1
-RUN mkdir /django_project
-WORKDIR /django_project
-ADD . /django_project/
+RUN mkdir /wedding_project
+WORKDIR /wedding_project
+ADD . /wedding_project/
 RUN pip install --upgrade pip && pip install -r requirements.txt
 RUN pip install mysqlclient
-COPY . /django_project/
+COPY . /wedding_project/

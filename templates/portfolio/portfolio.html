@@ -1,0 +1,20 @@
+{% extends 'common/base.html' %}
+
+{% block title %}
+    Portfolio
+{% endblock %}
+
+{% block content %}
+
+    <h1>Here is my portfolio</h1>
+    <form method="POST" action="{% url 'portfolio' %}" enctype="multipart/form-data">
+        {% csrf_token %}
+        {{ form }}
+        <button>Submit</button>
+    </form>
+
+    {{ movie }}
+    <h1>{{ movie.name }}</h1>
+    <p>{{ movie.image }}</p>
+    <img style="max-width: 300px" src="{{ movie.image.url }}" alt="">
+{% endblock %}

@@ -1,0 +1,17 @@
+{% extends 'common/base.html' %}
+
+{% block title %}
+    Profile
+{% endblock %}
+
+{% block content %}
+    <div >
+        <h3>Photographer {{ profile_user.first_name }} {{ profile_user.last_name }}</h3>
+        <p>From Country, City</p>
+        <p>Language: ...</p>
+        <p>Wedding photography value: ... one hour (minimum ... hours)</p>
+        <p>Phone: ...</p>
+        <p><a href="{% url 'sign_up' %}">Edit profile</a></p>
+        <button class="btn btn-warning">Upload photography</button>
+    </div>
+{% endblock %}

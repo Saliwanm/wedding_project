@@ -1,0 +1,31 @@
+{% extends 'common/base.html' %}
+
+{% block title %}
+    Sign_up
+{% endblock %}
+
+{% block content %}
+    <div class="container py-4">
+        <div class="card w-50 mx-auto">
+            <div id="loginBlock" class="card-header">
+                <h4 class="card-title" style="margin-left: 40%">Register</h4>
+            </div>
+            <div class="card-body">
+                <form class="form" role="form" action="{% url 'sign_in' %}" method="post">
+                    {% csrf_token %}
+                    <div class="mb-3">
+                        <label for="username" class="form-label">Username</label>
+                        <input type="text" class="form-control" id="username" name="username">
+                    </div>
+                    <div class="mb-3">
+                        <label for="exampleInputPassword1" class="form-label">Password</label>
+                        <input type="password" class="form-control" id="exampleInputPassword1" name="password">
+                    </div>
+                    <button type="submit" class="btn btn-primary">Submit</button>
+                    <br><br>
+                    <p>If you do not have an account, click <a href="{% url 'sign_up' %}">Registration</a>.</p>
+                </form>
+            </div>
+        </div>
+    </div>
+{% endblock %}

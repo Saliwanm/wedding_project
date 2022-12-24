@@ -1,0 +1,29 @@
+{% extends 'common/base.html' %}
+
+{% block title %}
+    Forum create
+{% endblock %}
+
+{% block content %}
+    {% if request.user.is_authenticated %}
+        <div class="features">
+        <h1>Form for adding article</h1>
+        <form method="POST">
+            {% csrf_token %}
+            {{ form.title }}<br>
+            {{ form.full_text }}<br>
+            {{ form.date }}<br>
+{#            <input type="text" placeholder="enter article's name" class="form-control"><br>#}
+{#            <input type="text" placeholder="enter article's anons" class="form-control"><br>#}
+{#            <textarea class="form-control" placeholder="the article's text here"></textarea><br>#}
+{#            <input type="date" class="form-control"><br>#}
+{#            <input type="time" class="form-control"><br>#}
+            <button class="btn btn-success" type="submit">Add article</button>
+            <br>
+            <span>{{ error }}</span>
+        </form>
+    </div>
+    {% else %}
+        <div><h3>Іf you want to create a new article, you have to register</h3></div>
+    {% endif %}
+{% endblock %}

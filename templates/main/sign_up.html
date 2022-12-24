@@ -1,10 +1,52 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>Title</title>
-</head>
-<body>
+{% extends 'common/base.html' %}
 
-</body>
-</html>
+{% block title %}
+    Sign_up
+{% endblock %}
+
+{% block content %}
+    <div class="container py-4">
+        <div class="card w-50 mx-auto">
+            <div id="loginBlock" class="card-header">
+                <h4 class="card-title" style="margin-left: 40%">Register</h4>
+            </div>
+            <div class="card-body">
+                <form class="form" role="form" {% if user.is_authenticated %} action="{% url 'update_user' id=user.id %}" {% else %} action="{% url 'sign_up' %}" {% endif %} method="post">
+                    {% csrf_token %}
+                    <div class="mb-3">
+                        <label for="exampleInputEmail1" class="form-label">Email address</label>
+                        <input type="email" class="form-control" {% if user %} value="{{ user.email }}" {% endif %} id="email" aria-describedby="emailHelp"
+                               name="email">
+                        <div id="emailHelp" class="form-text">We'll never share your email with anyone else.</div>
+                    </div>
+                    <div class="mb-3">
+                        <label for="username" class="form-label">Username</label>
+                        <input type="text" class="form-control" {% if user %} value="{{ user.username }}" {% endif %} id="username" name="username">
+                    </div>
+                    <div class="mb-3">
+                        <label for="first_name" class="form-label">First name</label>
+                        <input type="text" class="form-control" {% if user %} value="{{ user.first_name }}" {% endif %} id="first_name" name="first_name">
+                    </div>
+                    <div class="mb-3">
+                        <label for="last_name" class="form-label">Last name</label>
+                        <input type="text" class="form-control" {% if user %} value="{{ user.last_name }}" {% endif %} id="last_name" name="last_name">
+                    </div>
+                    {% if user.is_authenticated %}
+                    {% else %}
+                    <div class="mb-3">
+                        <label for="exampleInputPassword1" class="form-label">Password</label>
+                        <input type="password" class="form-control" id="password" name="password">
+                    </div>
+                    {% endif %}
+                    <button type="submit" class="btn btn-primary">Submit</button>
+                    <br><br>
+                    {% if user.is_authenticated %}
+                        <p><a href="{% url 'change_password' id=user.id %}">Change password</a></p>
+                    {% else %}
+                        <p>If you have an account, click <a href="{% url 'sign_in' %}">Login</a></p>
+                    {% endif %}
+                </form>
+            </div>
+        </div>
+    </div>
+{% endblock %}

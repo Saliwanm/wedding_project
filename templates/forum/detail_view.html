@@ -1,0 +1,32 @@
+{% extends 'common/base.html' %}
+
+{% block title %}
+    Forum
+{% endblock %}
+
+{% block content %}
+    {% if request.user.is_authenticated %}
+        <h1>{{ forum.title }}</h1>
+        <p>{{ forum.full_text }}</p><br>
+        <p>Comments:</p>
+        {% for c in comment %}
+            {% if c.cut_id == forum.id %}
+                <p>{{ c.full_text }}</p>
+            {% endif %}
+        {% endfor %}
+
+        <form method="POST" action="{% url 'comment_create' id=forum.id %}">
+            {% csrf_token %}
+            <div class="mb-3">
+                <label for="full_text" class="form-label">Your comment</label>
+                <input type="text" class="form-control" name="full_text" id="full_text" aria-describedby="title">
+            </div>
+
+            <button class="btn btn-success" type="submit">Add comment</button>
+            <br>
+            <span>{{ error }}</span>
+        </form>
+    {% else %}
+        <div><h3>Іf you want to see all forum's articles, you have to register</h3></div>
+    {% endif %}
+{% endblock %}
