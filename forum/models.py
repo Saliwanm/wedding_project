@@ -20,7 +20,7 @@ class Forum(models.Model):
 
 class ForumComment(models.Model):
     full_text = models.TextField('FullText', blank=True)
-    user = models.ForeignKey(User, null=True, on_delete=models.CASCADE)
+    user = models.ForeignKey(User, null=False, on_delete=models.CASCADE)
     cut = models.ForeignKey(Forum, on_delete=models.CASCADE)
 
     def __str__(self):

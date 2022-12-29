@@ -11,7 +11,7 @@
         <p>Comments:</p>
         {% for c in comment %}
             {% if c.cut_id == forum.id %}
-                <p>{{ c.full_text }}</p>
+                <p>{{ c.user.first_name }} {{ c.user.last_name }} * {{ c.user.username }} : {{ c.full_text }}</p>
             {% endif %}
         {% endfor %}
 

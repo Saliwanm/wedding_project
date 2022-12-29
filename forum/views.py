@@ -31,6 +31,7 @@ def comment_crate(request, id):
         comment = ForumComment()
         comment.full_text = request.POST.get('full_text')
         comment.cut_id = id
+        comment.user = request.user
         comment.save()
         return redirect('forum')
 
