@@ -52,7 +52,7 @@
                         </a>
                         <ul class="dropdown-menu">
                             <li><a class="dropdown-item" href="{% url 'profile' id=user.id %}">Profile</a></li>
-                            <li><a class="dropdown-item" href="#">Edit</a></li>
+                            <li><a class="dropdown-item" href="{% url 'user_profile' id=user.id %}">Profile+</a></li>
                             <li>
                                 <hr class="dropdown-divider">
                             </li>

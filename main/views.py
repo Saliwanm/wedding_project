@@ -2,7 +2,8 @@ from django.shortcuts import render, redirect
 from django.contrib.auth.models import User
 from django.contrib.auth import authenticate, login, logout
 from django.core.exceptions import PermissionDenied
-from django.http import HttpResponse
+from .models import PhotoAvatar, UserProfile
+from django.http import HttpResponse, Http404
 
 
 def home(request):
@@ -83,4 +84,26 @@ def change_password(request, id):
 def profile(request, id):
     if request.user.is_authenticated:
         profile_user = User.objects.get(id=id)
-        return render(request, 'main/profile.html', {'profile_user': profile_user})
+        try:
+            avatar = PhotoAvatar.objects.get(id=id)
+        except:
+            avatar = ''
+        if avatar is not None:
+            return render(request, 'main/profile.html', {
+                'profile_user': profile_user,
+                'avatar': avatar,
+            })
+        else:
+            return render(request, 'main/profile.html', {'profile_user': profile_user})
+
+
+def user_profile_plus(request, id):
+    if request.user.is_authenticated:
+        user_profile = User.objects.get(id=id)
+        user_plus = UserProfile.objects.all()
+        return render(request, 'main/user_profile_plus.html', {
+            'user_plus': user_plus,
+            'user_profile': user_profile,
+        })
+    else:
+        raise PermissionDenied

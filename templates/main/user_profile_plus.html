@@ -1,0 +1,26 @@
+{% extends 'common/base.html' %}
+
+{% block title %}
+    User profile
+{% endblock %}
+
+{% block content %}
+    <h1>This will be a date user</h1>
+    {{ user_profile.email }}<br>
+    {{ user_profile.username }}<br>
+    {{ user_profile.first_name }}<br>
+    {{ user_profile.last_name }}<br>
+    {% for u_p in user_plus %}
+        {% if u_p.user.id == user_profile.id %}
+            {{ u_p.phone }}<br>
+            {{ u_p.web_site }}<br>
+            {{ u_p.country }}<br>
+            {{ u_p.language }}<br>
+            {{ u_p.price }}<br>
+            {{ u_p.hour }}<br>
+            {{ u_p.user }}<br>
+            {{ u_p.image_url }}<br>
+        {% endif %}
+    {% endfor %}
+
+{% endblock %}
