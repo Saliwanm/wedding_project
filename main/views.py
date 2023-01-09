@@ -51,11 +51,16 @@ def logout_view(request):
 def edit_user(request, id):
     if request.user.is_authenticated:
         user = User.objects.get(id=id)
+        user_plus = UserProfile.objects.get(user_id=id)
         return render(request, "main/sign_up.html", {
-            'user': user
+            'user': user,
+            'user_plus': user_plus,
         })
     else:
         raise PermissionDenied
+
+
+# def edit_user_plus()
 
 
 def update_user(request, id):
@@ -84,6 +89,7 @@ def change_password(request, id):
 def profile(request, id):
     if request.user.is_authenticated:
         profile_user = User.objects.get(id=id)
+        user_plus = UserProfile.objects.all()
         try:
             avatar = PhotoAvatar.objects.get(id=id)
         except:
@@ -91,19 +97,10 @@ def profile(request, id):
         if avatar is not None:
             return render(request, 'main/profile.html', {
                 'profile_user': profile_user,
+                'user_plus': user_plus,
                 'avatar': avatar,
             })
         else:
             return render(request, 'main/profile.html', {'profile_user': profile_user})
-
-
-def user_profile_plus(request, id):
-    if request.user.is_authenticated:
-        user_profile = User.objects.get(id=id)
-        user_plus = UserProfile.objects.all()
-        return render(request, 'main/user_profile_plus.html', {
-            'user_plus': user_plus,
-            'user_profile': user_profile,
-        })
     else:
         raise PermissionDenied

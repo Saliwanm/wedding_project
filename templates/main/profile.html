@@ -6,17 +6,27 @@
 
 {% block content %}
     <div >
-        <h3>Photographer {{ profile_user.first_name }} {{ profile_user.last_name }}</h3>
+
 
 {#        <p>{{ avatar.image }}</p>#}
-        <img style="max-width: 300px" src="{{ avatar.image.url }}" alt="">
+        <img style="max-width: 200px" src="{{ avatar.image.url }}" alt="">
 
-        <p>From Country, City</p>
-        <p>Language: ...</p>
-        <p>Wedding photography value: ... one hour (minimum ... hours)</p>
-        <p>Phone: ...</p>
+        {% for u_p in user_plus %}
+            {% if u_p.user.id == profile_user.id %}
+                <h3>Photographer {{ profile_user.first_name }} {{ profile_user.last_name }}</h3>
+                <h5>@{{ u_p.user }}</h5>
+                <p>Phone: {{ u_p.phone }}</p><br>
+                <p><a href="#">Web site: {{ u_p.web_site }}</a></p><br>
+                <p>From {{ u_p.country }}</p><br>
+                <p>Language: {{ u_p.language }}</p><br>
+                <p>Wedding photography value: {{ u_p.price }} $ for {{ u_p.hour }} hour</p><br>
+                {{ u_p.user.id }}
+{#                {{ u_p.image_url }}<br>#}
+            {% endif %}
+        {% endfor %}
+
         <p><a href="{% url 'sign_up' %}">Edit profile</a></p>
 {#        <button type="button" class="edit-prof__avatar-button js-select-avatar">Choice photo</button>#}
-        <button class="btn btn-warning">Upload photography</button>
+        <button class="btn btn-warning">Upload your photography</button>
     </div>
 {% endblock %}
