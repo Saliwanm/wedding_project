@@ -20,13 +20,12 @@
                 <p>From {{ u_p.country }}</p><br>
                 <p>Language: {{ u_p.language }}</p><br>
                 <p>Wedding photography value: {{ u_p.price }} $ for {{ u_p.hour }} hour</p><br>
-                {{ u_p.user.id }}
+{#                {{ u_p.user.id }}#}
 {#                {{ u_p.image_url }}<br>#}
             {% endif %}
         {% endfor %}
 
-        <p><a href="{% url 'sign_up' %}">Edit profile</a></p>
-{#        <button type="button" class="edit-prof__avatar-button js-select-avatar">Choice photo</button>#}
-        <button class="btn btn-warning">Upload your photography</button>
+        <p><a href="{% url 'personal_data' id=user.id %}">Edit personal data</a></p>
+{#        <p><a href="{% url 'sign_up' %}">Edit user date</a></p>#}
     </div>
 {% endblock %}

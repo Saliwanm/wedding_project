@@ -3,6 +3,7 @@ from django.contrib.auth.models import User
 from django.contrib.auth import authenticate, login, logout
 from django.core.exceptions import PermissionDenied
 from .models import PhotoAvatar, UserProfile
+from .forms import PhotoAvatarForm
 from django.http import HttpResponse, Http404
 
 
@@ -60,9 +61,6 @@ def edit_user(request, id):
         raise PermissionDenied
 
 
-# def edit_user_plus()
-
-
 def update_user(request, id):
     if request.user.is_authenticated:
         user = User.objects.get(id=id)
@@ -91,7 +89,7 @@ def profile(request, id):
         profile_user = User.objects.get(id=id)
         user_plus = UserProfile.objects.all()
         try:
-            avatar = PhotoAvatar.objects.get(id=id)
+            avatar = PhotoAvatar.objects.get(user_id=id)
         except:
             avatar = ''
         if avatar is not None:
@@ -104,3 +102,86 @@ def profile(request, id):
             return render(request, 'main/profile.html', {'profile_user': profile_user})
     else:
         raise PermissionDenied
+
+
+def personal_data(request, id):
+    if request.user.is_authenticated:
+        user_profile = User.objects.get(id=id)
+        user_plus = UserProfile.objects.all()
+        if request.POST:
+            PhotoAvatar.objects.filter(user_id=id).delete()
+            form_avatar = PhotoAvatarForm(request.POST, request.FILES)
+            if form_avatar.is_valid():
+                form_avatar.save()
+            return redirect("/")
+        try:
+            avatar = PhotoAvatar.objects.get(user_id=id)
+            print(avatar.image)
+        except:
+            avatar = ''
+
+        if avatar is not None:
+            return render(request, 'main/personal_data.html', {
+                "user_profile": user_profile,
+                "user_plus": user_plus,
+                "avatar": avatar,
+                "form_avatar": PhotoAvatarForm,
+            })
+        else:
+            return render(request, 'main/personal_data.html', {
+                "user_profile": user_profile,
+                "user_plus": user_plus,
+                "form_avatar": PhotoAvatarForm,
+            })
+    else:
+        raise PermissionDenied
+
+
+# def user_plus_edit(request):
+#     if request.method == "POST":
+#         user = User()
+#         user_plus = UserProfile()
+#         user_plus.phone = request.POST.get("phone")
+#         user_plus.country = request.POST.get("country")
+#         user_plus.web_site = request.POST.get("site")
+#         user_plus.language = request.POST.get("language")
+#         user_plus.price = request.POST.get("price")
+#         user_plus.hour = request.POST.get("hour")
+#         user_plus.user = user.username
+#         user_plus.save()
+#         user.username = request.POST.get("username")
+#         user.email = request.POST.get("email")
+#         user.first_name = request.POST.get("first_name")
+#         user.last_name = request.POST.get("last_name")
+#         user.set_password(request.POST.get("password"))
+#         user.is_superuser = False
+#         user.is_staff = False
+#         user.is_active = True
+#         user.save()
+#         login(request,user)
+#         return redirect("/")
+#     else:
+#         return render(request, "main/personal_data.html", {})
+
+
+# def edit_user(request, id):
+#     if request.user.is_authenticated:
+#         user = User.objects.get(id=id)
+#         user_plus = UserProfile.objects.get(user_id=id)
+#         return render(request, "main/sign_up.html", {
+#             'user': user,
+#             'user_plus': user_plus,
+#         })
+#     else:
+#         raise PermissionDenied
+
+
+# def update_user(request, id):
+#     if request.user.is_authenticated:
+#         user = User.objects.get(id=id)
+#         user.email = request.POST.get('email')
+#         user.username = request.POST.get('username')
+#         user.first_name = request.POST.get('first_name')
+#         user.last_name = request.POST.get('last_name')
+#         user.save()
+#         return redirect('/')

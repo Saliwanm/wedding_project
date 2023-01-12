@@ -1,0 +1,86 @@
+{% extends 'common/base.html' %}
+{% load static %}
+
+{% block title %}
+    Personal Data
+{% endblock %}
+
+{% block content %}
+    <div>
+        <h1>Editing of personal data</h1>
+        {% for u_p in user_plus %}
+            {% if u_p.user.id == user_profile.id %}
+                <div class="edit-prof-columns__item">
+                    {% if avatar %}
+                        <img style="max-width: 200px" src="{{ avatar.image.url }}" alt="">
+                    {% else %}
+                      <img style="max-width: 200px" src="{% static 'img/logo.jpg' %}" alt="">
+                    {% endif %}
+                    <br><br>
+                    <form action="{% url 'personal_data' id=user.id %}" method="POST" enctype="multipart/form-data">
+                        {% csrf_token %}
+                        {{ form_avatar.image }}
+                        {{ form_avatar.user }}
+                        <button>Submit</button>
+                    </form>
+                    <br>
+                    <div class="input-group mb-3">
+                        <span class="input-group-text" id="inputGroup-sizing-default">First name</span>
+                        <input value="{{ user_profile.first_name }}" type="text" class="form-control" aria-label="Sizing example input"
+                               aria-describedby="inputGroup-sizing-default">
+                    </div>
+                    <div class="input-group mb-3">
+                        <span class="input-group-text" id="inputGroup-sizing-default">Last name</span>
+                        <input value="{{ user_profile.last_name }}" type="text" class="form-control" aria-label="Sizing example input"
+                               aria-describedby="inputGroup-sizing-default">
+                    </div>
+                    <div class="input-group mb-3">
+                        <span class="input-group-text" id="inputGroup-sizing-default">Username</span>
+                        <input value="{{ user_profile.username }}" type="text" class="form-control" aria-label="Sizing example input"
+                               aria-describedby="inputGroup-sizing-default">
+                    </div>
+                    <p>Where are you from?</p>
+                    <div class="input-group mb-3">
+                        <span class="input-group-text" id="inputGroup-sizing-default">City</span>
+                        <input value="{{ u_p.country }}" type="text" class="form-control" aria-label="Sizing example input"
+                               aria-describedby="inputGroup-sizing-default">
+                    </div>
+                    <p>A phone number is required to access all BestWed features. You can also reset your password using your
+                        phone number if you forget your password.
+                    </p>
+                    <div class="input-group mb-3">
+                        <span class="input-group-text" id="inputGroup-sizing-default">Phone</span>
+                        <input value="{{ u_p.phone }}" type="text" class="form-control" aria-label="Sizing example input"
+                               aria-describedby="inputGroup-sizing-default">
+                    </div>
+                    <p>A website required to all peoples can contact you</p>
+                    <div class="input-group mb-3">
+                        <span class="input-group-text" id="inputGroup-sizing-default">Website</span>
+                        <input value="{{ u_p.web_site }}" type="text" class="form-control" aria-label="Sizing example input"
+                               aria-describedby="inputGroup-sizing-default">
+                    </div>
+                    <p>What languages do you speak?</p>
+                    <div class="input-group mb-3">
+                        <span class="input-group-text" id="inputGroup-sizing-default">Languages</span>
+                        <input value="{{ u_p.language }}" type="text" class="form-control" aria-label="Sizing example input"
+                               aria-describedby="inputGroup-sizing-default">
+                    </div>
+                    <div class="input-group">
+                        <span class="input-group-text">The cost of your service</span>
+                        <input value="{{ u_p.price }}" type="text" aria-label="First name" class="form-control">
+                        <span class="input-group-text">for</span>
+                        <input value="{{ u_p.hour }}" type="text" aria-label="Last name" class="form-control">
+                        <span class="input-group-text">hour</span>
+                    </div>
+                    <br>
+
+                    <div class="input-group flex-nowrap">
+                        <span class="input-group-text" id="addon-wrapping">@</span>
+                        <input value="{{ user_profile.email }}" type="text" class="form-control" placeholder="Email" aria-label="Email"
+                               aria-describedby="addon-wrapping">
+                    </div>
+                </div>
+            {% endif %}
+        {% endfor %}
+    </div>
+{% endblock %}

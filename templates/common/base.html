@@ -52,7 +52,8 @@
                         </a>
                         <ul class="dropdown-menu">
                             <li><a class="dropdown-item" href="{% url 'profile' id=user.id %}">Profile</a></li>
-                            <li><a class="dropdown-item" href="#">Personal data</a></li>
+                            <li><a class="dropdown-item" href="{% url 'personal_data' id=user.id %}">Personal data</a></li>
+                            <li><a class="dropdown-item" href="{% url 'sign_up' %}">Change data</a></li>
                             <li>
                                 <hr class="dropdown-divider">
                             </li>

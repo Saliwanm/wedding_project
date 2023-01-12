@@ -12,4 +12,6 @@ urlpatterns = [
     path('update/<int:id>', views.update_user, name='update_user'),
     path('change_password/<int:id>', views.change_password, name='change_password'),
     path('profile/<int:id>', views.profile, name='profile'),
+    path('personal_data/<int:id>', views.personal_data, name='personal_data'),
+    # path('personal_data', views.user_plus, name='user_plus'),
 ]
